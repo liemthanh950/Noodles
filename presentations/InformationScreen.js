@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import firebase from '../firebase/firebase';
 
-const information = () => {
+const InformationScreen = () => {
   const [data, setData] = useState([]);
   const getuser = () => {
     firebase
@@ -18,7 +18,7 @@ const information = () => {
       .ref()
       .child('/information')
       .on('value', snapshot => {
-        var infor = [];
+        const infor = [];
         snapshot.forEach(child => {
           let information = {
             fullname: child.val().fullname,
@@ -27,9 +27,10 @@ const information = () => {
             department: child.val().department,
           };
           infor.push(information);
+          setData([1, 2, 3]);
         });
         console.log(infor);
-        setData(infor);
+
         console.log('dad', data);
       });
   };
@@ -252,4 +253,4 @@ const styles = StyleSheet.create({
     color: '#C4C4C4',
   },
 });
-export default information;
+export default InformationScreen;
