@@ -12,13 +12,14 @@ import firebase from '../firebase/firebase';
 
 const InformationScreen = () => {
   const [data, setData] = useState([]);
+
   const getuser = () => {
     firebase
       .database()
       .ref()
-      .child('/information')
+      .child('information')
       .on('value', snapshot => {
-        const infor = [];
+        var infor = [];
         snapshot.forEach(child => {
           let information = {
             fullname: child.val().fullname,
@@ -27,11 +28,9 @@ const InformationScreen = () => {
             department: child.val().department,
           };
           infor.push(information);
-          setData([1, 2, 3]);
         });
-        console.log(infor);
-
-        console.log('dad', data);
+        setData(infor);
+        console.log('data', data);
       });
   };
 
@@ -40,120 +39,150 @@ const InformationScreen = () => {
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ImageBackground
-        source={require('../image/backgroud.jpg')}
-        resizeMode="cover"
-        style={styles.container}>
-        <View>
-          <Image style={styles.logo} source={require('../image/logo.png')} />
-          <Text style={styles.textinformation}>INFORMATION</Text>
+    <>
+      {data.length != 0 ? (
+        <SafeAreaView style={styles.container}>
           <ImageBackground
-            source={require('../image/BGcard.png')}
+            source={require('../image/backgroud.jpg')}
             resizeMode="cover"
-            style={styles.BGcard}>
-            <View style={{flexDirection: 'row'}}>
+            style={styles.container}>
+            <View>
               <Image
-                style={styles.user}
-                source={require('../image/user.jpg')}
+                style={styles.logo}
+                source={require('../image/logo.png')}
               />
-              <View>
-                <View
-                  style={{flexDirection: 'row', marginTop: 10, marginLeft: 40}}>
-                  <Text style={styles.textfullname}>Full Name:</Text>
-                  <Text style={styles.textname}></Text>
+              <Text style={styles.textinformation}>INFORMATION</Text>
+              <ImageBackground
+                source={require('../image/BGcard.png')}
+                resizeMode="cover"
+                style={styles.BGcard}>
+                <View style={{flexDirection: 'row'}}>
+                  <Image
+                    style={styles.user}
+                    source={require('../image/user.jpg')}
+                  />
+                  <View>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        marginTop: 10,
+                        marginLeft: 40,
+                      }}>
+                      <Text style={styles.textfullname}>Full Name:</Text>
+                      <Text style={styles.textname}>{data[0].fullname}</Text>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        marginLeft: 40,
+                        marginTop: 5,
+                      }}>
+                      <Text style={styles.textfullname}>Birthday:</Text>
+                      <Text style={styles.textname}> 12/10/1999</Text>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        marginLeft: 40,
+                        marginTop: 5,
+                      }}>
+                      <Text style={styles.textfullname}>Gender::</Text>
+                      <Text style={styles.textname}> Female</Text>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        marginLeft: 40,
+                        marginTop: 5,
+                      }}>
+                      <Text style={styles.textfullname}>Department:</Text>
+                      <Text style={styles.textname}>Design</Text>
+                    </View>
+                  </View>
                 </View>
-                <View
-                  style={{flexDirection: 'row', marginLeft: 40, marginTop: 5}}>
-                  <Text style={styles.textfullname}>Birthday:</Text>
-                  <Text style={styles.textname}> 12/10/1999</Text>
-                </View>
-                <View
-                  style={{flexDirection: 'row', marginLeft: 40, marginTop: 5}}>
-                  <Text style={styles.textfullname}>Gender::</Text>
-                  <Text style={styles.textname}> Female</Text>
-                </View>
-                <View
-                  style={{flexDirection: 'row', marginLeft: 40, marginTop: 5}}>
-                  <Text style={styles.textfullname}>Department:</Text>
-                  <Text style={styles.textname}>Design</Text>
-                </View>
+              </ImageBackground>
+              {/*Cham đỏ ly mì*/}
+              <View style={styles.css_hover}>
+                <Image
+                  style={styles.hover}
+                  source={require('../image/hover.png')}
+                />
+                <Image
+                  style={styles.hover}
+                  source={require('../image/hover.png')}
+                />
+                <Image
+                  style={styles.hover}
+                  source={require('../image/hover.png')}
+                />
+              </View>
+              {/*Ly mì còn*/}
+              <View style={styles.css_noodles}>
+                <Image
+                  style={styles.noodles}
+                  source={require('../image/noodles.png')}
+                />
+                <Image
+                  style={styles.noodles}
+                  source={require('../image/noodles.png')}
+                />
+                <Image
+                  style={styles.noodles}
+                  source={require('../image/noodles.png')}
+                />
+              </View>
+              {/*ly mì hết*/}
+              <View style={styles.css_unavailableNoodles}>
+                <Image
+                  style={styles.unavailableNoodles}
+                  source={require('../image/unavailableNoodles.png')}
+                />
+                <Image
+                  style={styles.unavailableNoodles}
+                  source={require('../image/unavailableNoodles.png')}
+                />
+                <Image
+                  style={styles.unavailableNoodles}
+                  source={require('../image/unavailableNoodles.png')}
+                />
+              </View>
+              <View style={styles.unavailableText}>
+                <Text style={styles.css_unavailableText}>Unavailable</Text>
+                <Text style={styles.css_unavailableText}>Unavailable</Text>
+                <Text style={styles.css_unavailableText}>Unavailable</Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignSelf: 'center',
+                  marginTop: 10,
+                }}>
+                <Text
+                  style={{color: '#D91313', fontWeight: 'bold', fontSize: 15}}>
+                  3
+                </Text>
+                <Text style={{color: '#9C6666', fontSize: 15}}>
+                  {' '}
+                  cups of noodles left this month
+                </Text>
               </View>
             </View>
+            <TouchableOpacity style={{alignItems: 'center', marginTop: 70}}>
+              <Image
+                style={styles.buttoncomeback}
+                source={require('../image/buttoncomeback.png')}
+              />
+              <Image
+                style={styles.buttonget}
+                source={require('../image/buttonget.png')}
+              />
+            </TouchableOpacity>
           </ImageBackground>
-          {/*Cham đỏ ly mì*/}
-          <View style={styles.css_hover}>
-            <Image
-              style={styles.hover}
-              source={require('../image/hover.png')}
-            />
-            <Image
-              style={styles.hover}
-              source={require('../image/hover.png')}
-            />
-            <Image
-              style={styles.hover}
-              source={require('../image/hover.png')}
-            />
-          </View>
-          {/*Ly mì còn*/}
-          <View style={styles.css_noodles}>
-            <Image
-              style={styles.noodles}
-              source={require('../image/noodles.png')}
-            />
-            <Image
-              style={styles.noodles}
-              source={require('../image/noodles.png')}
-            />
-            <Image
-              style={styles.noodles}
-              source={require('../image/noodles.png')}
-            />
-          </View>
-          {/*ly mì hết*/}
-          <View style={styles.css_unavailableNoodles}>
-            <Image
-              style={styles.unavailableNoodles}
-              source={require('../image/unavailableNoodles.png')}
-            />
-            <Image
-              style={styles.unavailableNoodles}
-              source={require('../image/unavailableNoodles.png')}
-            />
-            <Image
-              style={styles.unavailableNoodles}
-              source={require('../image/unavailableNoodles.png')}
-            />
-          </View>
-          <View style={styles.unavailableText}>
-            <Text style={styles.css_unavailableText}>Unavailable</Text>
-            <Text style={styles.css_unavailableText}>Unavailable</Text>
-            <Text style={styles.css_unavailableText}>Unavailable</Text>
-          </View>
-          <View
-            style={{flexDirection: 'row', alignSelf: 'center', marginTop: 10}}>
-            <Text style={{color: '#D91313', fontWeight: 'bold', fontSize: 15}}>
-              3
-            </Text>
-            <Text style={{color: '#9C6666', fontSize: 15}}>
-              {' '}
-              cups of noodles left this month
-            </Text>
-          </View>
-        </View>
-        <TouchableOpacity style={{alignItems: 'center', marginTop: 70}}>
-          <Image
-            style={styles.buttoncomeback}
-            source={require('../image/buttoncomeback.png')}
-          />
-          <Image
-            style={styles.buttonget}
-            source={require('../image/buttonget.png')}
-          />
-        </TouchableOpacity>
-      </ImageBackground>
-    </SafeAreaView>
+        </SafeAreaView>
+      ) : (
+        <></>
+      )}
+    </>
   );
 };
 
