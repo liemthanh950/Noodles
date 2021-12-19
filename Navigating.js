@@ -11,7 +11,7 @@ const Stack = createNativeStackNavigator();
 
 function Navigating() {
   return (
-    <NavigationContainer>
+    // <NavigationContainer>
       <Stack.Navigator
         initialRouteName="HomeScreen"
         screenOptions={{headerShown: false}}>
@@ -21,7 +21,7 @@ function Navigating() {
         <Stack.Screen name="ErrorScreen" component={ErrorScreen} />
         <Stack.Screen name="OutofScreen" component={OutofScreen} />
       </Stack.Navigator>
-    </NavigationContainer>
+    // </NavigationContainer>
   );
 }
 
