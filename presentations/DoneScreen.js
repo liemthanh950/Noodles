@@ -9,7 +9,7 @@ import {
   ImageBackground,
 } from 'react-native';
 
-const Don = () => {
+const Done = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
@@ -29,7 +29,8 @@ const Don = () => {
             <Image style={styles.Tim} source={require('../image/Tim.png')} />
           </View>
           <View>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('InformationScreen')}>
               <Image
                 style={styles.buttonback}
                 source={require('../image/buttonback.png')}
@@ -101,4 +102,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Don;
+export default Done;

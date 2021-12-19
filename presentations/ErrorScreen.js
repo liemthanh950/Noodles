@@ -9,7 +9,7 @@ import {
   ImageBackground,
 } from 'react-native';
 
-const home = () => {
+const error = () => {
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
@@ -102,4 +102,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default home;
+export default error;

@@ -1,4 +1,5 @@
 import React from 'react';
+import {useNavigation} from '@react-navigation/native';
 import {
   Text,
   View,
@@ -9,7 +10,7 @@ import {
   ImageBackground,
 } from 'react-native';
 
-const home = () => {
+const home1 = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
@@ -30,7 +31,13 @@ const home = () => {
               style={styles.cameraQR}
               source={require('../image/cameraQR.jpg')}
             />
-            <Image style={styles.next} source={require('../image/next.png')} />
+            <TouchableOpacity
+              onPress={() => navigation.navigate('InformationScreen')}>
+              <Image
+                style={styles.next}
+                source={require('../image/next.png')}
+              />
+            </TouchableOpacity>
           </View>
         </View>
       </ImageBackground>
@@ -87,7 +94,8 @@ const styles = StyleSheet.create({
     height: 50,
     alignSelf: 'center',
     marginLeft: 40,
+    marginTop: 40,
   },
 });
 
-export default home;
+export default home1;

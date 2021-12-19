@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 import {
   Text,
   View,
@@ -10,9 +11,14 @@ import {
 } from 'react-native';
 import firebase from '../firebase/firebase';
 
-const InformationScreen = () => {
-  const [data, setData] = useState([]);
+const InformationScreen = ({navigation}) => {
+  const [selectedHover1, setSelectedHover1] = useState(false);
+  const [selectedHover2, setSelectedHover2] = useState(false);
+  const [selectedHover3, setSelectedHover3] = useState(false);
+  const [comeBack, setComeBack] = useState(false);
 
+  //firebase
+  const [data, setData] = useState([]);
   const getuser = () => {
     firebase
       .database()
@@ -37,6 +43,37 @@ const InformationScreen = () => {
   useEffect(() => {
     getuser();
   }, []);
+  const setNoodles1 = noodles =>
+    dispatch({
+      type: 'SET_NOODLES1',
+      payload: noodles,
+    });
+  const setNoodles2 = noodles =>
+    dispatch({
+      type: 'SET_NOODLES2',
+      payload: noodles,
+    });
+  const setNoodles3 = noodles =>
+    dispatch({
+      type: 'SET_NOODLES3',
+      payload: noodles,
+    });
+  const dispatch = useDispatch();
+
+  const handleGetNoodles = () => {
+    // redux
+    if (selectedNoodles1) {
+      setNoodles1(false);
+    }
+    if (selectedNoodles2) {
+      setNoodles1(false);
+    }
+    if (selectedNoodles3) {
+      setNoodles1(false);
+    }
+
+    navigation.navigate('DoneScreen');
+  };
 
   return (
     <>
@@ -102,7 +139,7 @@ const InformationScreen = () => {
                 </View>
               </ImageBackground>
               {/*Cham đỏ ly mì*/}
-              <View style={styles.css_hover}>
+              {/* <View style={styles.css_hover}>
                 <Image
                   style={styles.hover}
                   source={require('../image/hover.png')}
@@ -115,24 +152,57 @@ const InformationScreen = () => {
                   style={styles.hover}
                   source={require('../image/hover.png')}
                 />
-              </View>
+              </View> */}
               {/*Ly mì còn*/}
               <View style={styles.css_noodles}>
-                <Image
-                  style={styles.noodles}
-                  source={require('../image/noodles.png')}
-                />
-                <Image
-                  style={styles.noodles}
-                  source={require('../image/noodles.png')}
-                />
-                <Image
-                  style={styles.noodles}
-                  source={require('../image/noodles.png')}
-                />
+                <TouchableOpacity
+                  onPress={() => {
+                    setSelectedHover1(!selectedHover1);
+                  }}>
+                  {selectedHover1 == true && (
+                    <Image
+                      style={styles.hover}
+                      source={require('../image/hover.png')}
+                    />
+                  )}
+                  <Image
+                    style={styles.noodles}
+                    source={require('../image/noodles.png')}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    setSelectedHover2(!selectedHover2);
+                  }}>
+                  {selectedHover2 == true && (
+                    <Image
+                      style={styles.hover}
+                      source={require('../image/hover.png')}
+                    />
+                  )}
+                  <Image
+                    style={styles.noodles}
+                    source={require('../image/noodles.png')}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    setSelectedHover3(!selectedHover3);
+                  }}>
+                  {selectedHover3 == true && (
+                    <Image
+                      style={styles.hover}
+                      source={require('../image/hover.png')}
+                    />
+                  )}
+                  <Image
+                    style={styles.noodles}
+                    source={require('../image/noodles.png')}
+                  />
+                </TouchableOpacity>
               </View>
               {/*ly mì hết*/}
-              <View style={styles.css_unavailableNoodles}>
+              {/* <View style={styles.css_unavailableNoodles}>
                 <Image
                   style={styles.unavailableNoodles}
                   source={require('../image/unavailableNoodles.png')}
@@ -145,17 +215,17 @@ const InformationScreen = () => {
                   style={styles.unavailableNoodles}
                   source={require('../image/unavailableNoodles.png')}
                 />
-              </View>
-              <View style={styles.unavailableText}>
+              </View> */}
+              {/* <View style={styles.unavailableText}>
                 <Text style={styles.css_unavailableText}>Unavailable</Text>
                 <Text style={styles.css_unavailableText}>Unavailable</Text>
                 <Text style={styles.css_unavailableText}>Unavailable</Text>
-              </View>
+              </View> */}
               <View
                 style={{
                   flexDirection: 'row',
                   alignSelf: 'center',
-                  marginTop: 10,
+                  marginTop: 40,
                 }}>
                 <Text
                   style={{color: '#D91313', fontWeight: 'bold', fontSize: 15}}>
@@ -167,15 +237,22 @@ const InformationScreen = () => {
                 </Text>
               </View>
             </View>
-            <TouchableOpacity style={{alignItems: 'center', marginTop: 70}}>
-              <Image
-                style={styles.buttoncomeback}
-                source={require('../image/buttoncomeback.png')}
-              />
+            <TouchableOpacity onPress={handleGetNoodles}>
               <Image
                 style={styles.buttonget}
                 source={require('../image/buttonget.png')}
               />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setComeBack(!comeBack);
+              }}>
+              {comeBack == true && (
+                <Image
+                  style={styles.buttoncomeback}
+                  source={require('../image/buttoncomeback.png')}
+                />
+              )}
             </TouchableOpacity>
           </ImageBackground>
         </SafeAreaView>
@@ -227,19 +304,19 @@ const styles = StyleSheet.create({
     marginHorizontal: 40,
   },
   noodles: {
-    width: 50,
-    height: 100,
+    width: 60,
+    height: 90,
   },
   buttonget: {
     width: 300,
     height: 50,
-    marginTop: 450,
+    marginTop: 60,
     position: 'absolute',
+    alignSelf: 'center',
   },
   buttoncomeback: {
     width: 300,
     height: 50,
-    marginTop: -30,
   },
   css_noodles: {
     justifyContent: 'space-between',
@@ -249,22 +326,23 @@ const styles = StyleSheet.create({
   },
   css_hover: {
     flexDirection: 'row',
-    width: 400,
+    width: 330,
     justifyContent: 'space-around',
     position: 'absolute',
-    marginTop: 330,
     alignSelf: 'center',
   },
   hover: {
+    marginTop: 10,
     width: 80,
     height: 80,
+    position: 'absolute',
+    marginLeft: -10,
   },
   css_unavailableNoodles: {
     flexDirection: 'row',
     width: 400,
     justifyContent: 'space-around',
     position: 'absolute',
-    marginTop: 320,
     alignSelf: 'center',
   },
   unavailableNoodles: {
