@@ -12,6 +12,7 @@ import {
 import firebase from '../firebase/firebase';
 
 const InformationScreen = ({navigation}) => {
+  const Hover = useSelector(state => state.NoodlesReducer.hover);
   const [selectedHover1, setSelectedHover1] = useState(false);
   const [selectedHover2, setSelectedHover2] = useState(false);
   const [selectedHover3, setSelectedHover3] = useState(false);
@@ -43,33 +44,37 @@ const InformationScreen = ({navigation}) => {
   useEffect(() => {
     getuser();
   }, []);
-  const setNoodles1 = noodles =>
+  const setHover1 = hover =>
     dispatch({
-      type: 'SET_NOODLES1',
-      payload: noodles,
+      type: 'SET_HOVER1',
+      payload: hover,
     });
-  const setNoodles2 = noodles =>
+  const setHover2 = hover =>
     dispatch({
-      type: 'SET_NOODLES2',
-      payload: noodles,
+      type: 'SET_HOVER2',
+      payload: hover,
     });
-  const setNoodles3 = noodles =>
+  const setHover3 = hover =>
     dispatch({
-      type: 'SET_NOODLES3',
-      payload: noodles,
+      type: 'SET_HOVER3',
+      payload: hover,
     });
   const dispatch = useDispatch();
 
   const handleGetNoodles = () => {
     // redux
-    if (selectedNoodles1) {
-      setNoodles1(false);
+    if (selectedHover1) {
+      setHover1(false);
+      setSelectedHover1(false);
     }
-    if (selectedNoodles2) {
-      setNoodles1(false);
+
+    if (selectedHover2) {
+      setHover2(false);
+      setSelectedHover2(false);
     }
-    if (selectedNoodles3) {
-      setNoodles1(false);
+    if (selectedHover3) {
+      setHover3(false);
+      setSelectedHover3(false);
     }
 
     navigation.navigate('DoneScreen');
@@ -115,7 +120,7 @@ const InformationScreen = ({navigation}) => {
                         marginTop: 5,
                       }}>
                       <Text style={styles.textfullname}>Birthday:</Text>
-                      <Text style={styles.textname}> 12/10/1999</Text>
+                      <Text style={styles.textbirthay}> {data[0].birthay}</Text>
                     </View>
                     <View
                       style={{
@@ -123,8 +128,8 @@ const InformationScreen = ({navigation}) => {
                         marginLeft: 40,
                         marginTop: 5,
                       }}>
-                      <Text style={styles.textfullname}>Gender::</Text>
-                      <Text style={styles.textname}> Female</Text>
+                      <Text style={styles.textfullname}>Gender: </Text>
+                      <Text style={styles.textgender}>{data[0].gender}</Text>
                     </View>
                     <View
                       style={{
@@ -133,103 +138,114 @@ const InformationScreen = ({navigation}) => {
                         marginTop: 5,
                       }}>
                       <Text style={styles.textfullname}>Department:</Text>
-                      <Text style={styles.textname}>Design</Text>
+                      <Text style={styles.textdepartment}>
+                        {data[0].department}
+                      </Text>
                     </View>
                   </View>
                 </View>
               </ImageBackground>
-              {/*Cham đỏ ly mì*/}
-              {/* <View style={styles.css_hover}>
-                <Image
-                  style={styles.hover}
-                  source={require('../image/hover.png')}
-                />
-                <Image
-                  style={styles.hover}
-                  source={require('../image/hover.png')}
-                />
-                <Image
-                  style={styles.hover}
-                  source={require('../image/hover.png')}
-                />
-              </View> */}
-              {/*Ly mì còn*/}
+
               <View style={styles.css_noodles}>
-                <TouchableOpacity
-                  onPress={() => {
-                    setSelectedHover1(!selectedHover1);
-                  }}>
-                  {selectedHover1 == true && (
-                    <Image
-                      style={styles.hover}
-                      source={require('../image/hover.png')}
-                    />
+                <View>
+                  {Hover.hover1 ? (
+                    <TouchableOpacity
+                      onPress={() => {
+                        setSelectedHover1(!selectedHover1);
+                      }}>
+                      {selectedHover1 == true && (
+                        <Image
+                          style={styles.hover}
+                          source={require('../image/hover.png')}
+                        />
+                      )}
+                      <Image
+                        style={styles.noodles}
+                        source={require('../image/noodles.png')}
+                      />
+                    </TouchableOpacity>
+                  ) : (
+                    <View>
+                      <Image
+                        style={styles.unavailableNoodles}
+                        source={require('../image/unavailableNoodles.png')}
+                      />
+                      <Text style={styles.css_unavailableText}>
+                        Unavailable
+                      </Text>
+                    </View>
                   )}
-                  <Image
-                    style={styles.noodles}
-                    source={require('../image/noodles.png')}
-                  />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    setSelectedHover2(!selectedHover2);
-                  }}>
-                  {selectedHover2 == true && (
-                    <Image
-                      style={styles.hover}
-                      source={require('../image/hover.png')}
-                    />
+                </View>
+                <View>
+                  {Hover.hover2 ? (
+                    <TouchableOpacity
+                      onPress={() => {
+                        setSelectedHover2(!selectedHover2);
+                      }}>
+                      {selectedHover2 == true && (
+                        <Image
+                          style={styles.hover}
+                          source={require('../image/hover.png')}
+                        />
+                      )}
+                      <Image
+                        style={styles.noodles}
+                        source={require('../image/noodles.png')}
+                      />
+                    </TouchableOpacity>
+                  ) : (
+                    <View>
+                      <Image
+                        style={styles.unavailableNoodles}
+                        source={require('../image/unavailableNoodles.png')}
+                      />
+                      <Text style={styles.css_unavailableText}>
+                        Unavailable
+                      </Text>
+                    </View>
                   )}
-                  <Image
-                    style={styles.noodles}
-                    source={require('../image/noodles.png')}
-                  />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    setSelectedHover3(!selectedHover3);
-                  }}>
-                  {selectedHover3 == true && (
-                    <Image
-                      style={styles.hover}
-                      source={require('../image/hover.png')}
-                    />
+                </View>
+
+                <View>
+                  {Hover.hover3 ? (
+                    <TouchableOpacity
+                      onPress={() => {
+                        setSelectedHover3(!selectedHover3);
+                      }}>
+                      {selectedHover3 == true && (
+                        <Image
+                          style={styles.hover}
+                          source={require('../image/hover.png')}
+                        />
+                      )}
+                      <Image
+                        style={styles.noodles}
+                        source={require('../image/noodles.png')}
+                      />
+                    </TouchableOpacity>
+                  ) : (
+                    <View>
+                      <Image
+                        style={styles.unavailableNoodles}
+                        source={require('../image/unavailableNoodles.png')}
+                      />
+                      <Text style={styles.css_unavailableText}>
+                        Unavailable
+                      </Text>
+                    </View>
                   )}
-                  <Image
-                    style={styles.noodles}
-                    source={require('../image/noodles.png')}
-                  />
-                </TouchableOpacity>
+                </View>
               </View>
-              {/*ly mì hết*/}
-              {/* <View style={styles.css_unavailableNoodles}>
-                <Image
-                  style={styles.unavailableNoodles}
-                  source={require('../image/unavailableNoodles.png')}
-                />
-                <Image
-                  style={styles.unavailableNoodles}
-                  source={require('../image/unavailableNoodles.png')}
-                />
-                <Image
-                  style={styles.unavailableNoodles}
-                  source={require('../image/unavailableNoodles.png')}
-                />
-              </View> */}
-              {/* <View style={styles.unavailableText}>
-                <Text style={styles.css_unavailableText}>Unavailable</Text>
-                <Text style={styles.css_unavailableText}>Unavailable</Text>
-                <Text style={styles.css_unavailableText}>Unavailable</Text>
-              </View> */}
+
               <View
                 style={{
                   flexDirection: 'row',
                   alignSelf: 'center',
-                  marginTop: 40,
+                  marginTop: 10,
                 }}>
                 <Text
                   style={{color: '#D91313', fontWeight: 'bold', fontSize: 15}}>
-                  3
+                  {Hover.remain}
                 </Text>
                 <Text style={{color: '#9C6666', fontSize: 15}}>
                   {' '}
@@ -301,7 +317,7 @@ const styles = StyleSheet.create({
   textname: {
     fontSize: 15,
     color: '#880B0B',
-    marginHorizontal: 40,
+    marginHorizontal: 30,
   },
   noodles: {
     width: 60,
@@ -358,6 +374,26 @@ const styles = StyleSheet.create({
     fontSize: 15,
     width: 100,
     color: '#C4C4C4',
+  },
+  textbirthay: {
+    marginLeft: 35,
+    fontSize: 15,
+    color: '#880B0B',
+  },
+  textgender: {
+    marginLeft: 45,
+    fontSize: 15,
+    color: '#880B0B',
+  },
+  textdesign: {
+    marginLeft: 40,
+    fontSize: 15,
+    color: '#880B0B',
+  },
+  textdepartment: {
+    marginLeft: 15,
+    fontSize: 15,
+    color: '#880B0B',
   },
 });
 export default InformationScreen;

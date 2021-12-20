@@ -29,8 +29,7 @@ const Done = ({navigation}) => {
             <Image style={styles.Tim} source={require('../image/Tim.png')} />
           </View>
           <View>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('InformationScreen')}>
+            <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
               <Image
                 style={styles.buttonback}
                 source={require('../image/buttonback.png')}
