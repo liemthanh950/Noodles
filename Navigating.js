@@ -13,7 +13,7 @@ function Navigating() {
   return (
     // <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="HomeScreen"
+        initialRouteName="InformationScreen"
         screenOptions={{headerShown: false}}>
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
         <Stack.Screen name="InformationScreen" component={InformationScreen} />
